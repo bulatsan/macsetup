@@ -36,21 +36,6 @@ vars:
     - id: 19458
       name: RussianWin
 
-    # {
-    #         InputSourceKind = "Keyboard Layout";
-    #         "KeyboardLayout ID" = 252;
-    #         "KeyboardLayout Name" = ABC;
-    #     },
-    #             {
-    #         "Bundle ID" = "com.apple.CharacterPaletteIM";
-    #         InputSourceKind = "Non Keyboard Input Method";
-    #     },
-    #             {
-    #         InputSourceKind = "Keyboard Layout";
-    #         "KeyboardLayout ID" = 19458;
-    #         "KeyboardLayout Name" = RussianWin;
-    #     },
-
   settings:
     # Shows all file extensions in Finder
     - defaults write -g AppleShowAllExtensions -bool true
