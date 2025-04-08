@@ -33,6 +33,8 @@ vars:
     - /Applications/Telegram.app
     - /Applications/Obsidian.app
 
+  # to get current layout (you can find there id and name): 
+  # defaults read com.apple.HIToolbox AppleEnabledInputSources
   langs:
     - id: 252
       name: ABC
