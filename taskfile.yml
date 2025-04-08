@@ -13,7 +13,8 @@ tasks:
       - task: settings
       - task: brew
       - task: appstore
-      - task: doc
+      - task: langs
+      - task: dock
 
   prepare:
     cmds:
@@ -28,6 +29,11 @@ tasks:
       - cmd: brew install mas
       - cmd: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended || true;
 
+  settings:
+    cmds:
+      - for: { var: settings }
+        cmd: "{{.ITEM}}"
+
   brew:
     cmds:
       - for: { var: brew }
@@ -38,16 +44,6 @@ tasks:
     cmds:
       - for: { var: appstore }
         cmd: mas install {{.ITEM}}
-
-  dock:
-    vars:
-      items: 
-        sh: dockutil --list | awk '{print $1;}'
-    cmds:
-      - for: { var: items }
-        cmd: dockutil --remove '{{.ITEM}}' --allhomes
-      - for: { var: dock }
-        cmd: dockutil --add '{{.ITEM}}' --allhomes
   
   langs:
     cmds:
@@ -61,7 +57,12 @@ tasks:
           <key>KeyboardLayout Name</key><string>{{.ITEM.name}}</string>
           </dict>"
 
-  settings:
+  dock:
+    vars:
+      items: 
+        sh: dockutil --list | awk '{print $1;}'
     cmds:
-      - for: { var: settings }
-        cmd: "{{.ITEM}}"
+      - for: { var: items }
+        cmd: dockutil --remove '{{.ITEM}}' --allhomes
+      - for: { var: dock }
+        cmd: dockutil --add '{{.ITEM}}' --allhomes
