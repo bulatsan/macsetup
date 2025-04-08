@@ -23,12 +23,15 @@ vars:
   appstore:
     - 6448898396 # FoXray
 
-  doc:
+  dock:
     - /Applications/Mail.app
     - /Applications/FoXray.app
+    - /Applications/KeePassXC.app
     - /Applications/iTerm.app
     - /Applications/Cursor.app
     - /Applications/Arc.app
+    - /Applications/Telegram.app
+    - /Applications/Obsidian.app
 
   langs:
     - id: 252

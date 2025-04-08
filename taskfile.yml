@@ -39,14 +39,14 @@ tasks:
       - for: { var: appstore }
         cmd: mas install {{.ITEM}}
 
-  doc:
+  dock:
     vars:
       items: 
         sh: dockutil --list | awk '{print $1;}'
     cmds:
       - for: { var: items }
         cmd: dockutil --remove '{{.ITEM}}' --allhomes
-      - for: { var: doc }
+      - for: { var: dock }
         cmd: dockutil --add '{{.ITEM}}' --allhomes
   
   langs:
