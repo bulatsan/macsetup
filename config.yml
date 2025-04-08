@@ -1,0 +1,85 @@
+version: '3'
+
+vars:
+  brew:
+    - tree
+    - nmap
+    - wget
+    - git
+    - python
+    - go
+    - node
+    - pnpm
+    - --cask iterm2
+    - --cask arc
+    - --cask postman
+    - --cask transmission
+    - --cask telegram
+    - --cask cursor
+    - --cask obsidian
+    - --cask orbstack
+    - --cask keepassxc
+
+  appstore:
+    - 6448898396 # FoXray
+
+  doc:
+    - /Applications/Mail.app
+    - /Applications/FoXray.app
+    - /Applications/iTerm.app
+    - /Applications/Cursor.app
+    - /Applications/Arc.app
+
+  langs:
+    - id: 252
+      name: ABC
+    - id: 19458
+      name: RussianWin
+
+    # {
+    #         InputSourceKind = "Keyboard Layout";
+    #         "KeyboardLayout ID" = 252;
+    #         "KeyboardLayout Name" = ABC;
+    #     },
+    #             {
+    #         "Bundle ID" = "com.apple.CharacterPaletteIM";
+    #         InputSourceKind = "Non Keyboard Input Method";
+    #     },
+    #             {
+    #         InputSourceKind = "Keyboard Layout";
+    #         "KeyboardLayout ID" = 19458;
+    #         "KeyboardLayout Name" = RussianWin;
+    #     },
+
+  settings:
+    # Shows all file extensions in Finder
+    - defaults write -g AppleShowAllExtensions -bool true
+    # Shows hidden files in Finder
+    - defaults write com.apple.finder AppleShowAllFiles true
+    # Shows the path bar in Finder
+    - defaults write com.apple.finder ShowPathbar -bool true
+    # Shows the status bar in Finder
+    - defaults write com.apple.finder ShowStatusBar -bool true
+    # Makes new Finder windows open in the home directory
+    - defaults write com.apple.finder NewWindowTarget PfHm
+    # Sets the preferred view style in Finder to list view
+    - defaults write com.apple.Finder FXPreferredViewStyle Nlsv
+    # Makes Finder sort folders before files
+    - defaults write com.apple.finder _FXSortFoldersFirst -bool true
+    # Stops Photos from opening automatically when devices are plugged in
+    - defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
+    # Dont create .DS_Store Files On Network Or USB Volumes
+    - defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+    - defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
+    # Disable the warning when changing a file extension
+    - defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+    # Makes the Library folder visible in Finder
+    - chflags nohidden ~/Library
+    # Key repeat timeouts
+    - defaults write -g KeyRepeat -int 2
+    - defaults write -g InitialKeyRepeat -int 15
+    # Disable recent apps section in dock
+    - defaults write com.apple.dock show-recents -bool false
+    # Git default branch main
+    - git config --global init.defaultBranch main
+

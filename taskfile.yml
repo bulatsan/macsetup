@@ -1,0 +1,67 @@
+# install task
+# sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin
+
+version: '3'
+
+includes:
+  conf: ./config.yml
+
+tasks:
+  run:
+    cmds:
+      - task: prepare
+      - task: settings
+      - task: brew
+      - task: appstore
+      - task: doc
+
+  prepare:
+    cmds:
+      - cmd: sudo softwareupdate -i -a
+      - cmd: sudo softwareupdate --install-rosetta --agree-to-license
+      - cmd: >
+          NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)";
+          echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >>${HOME}/.zprofile;
+          eval "$(/opt/homebrew/bin/brew shellenv)";
+          brew update && brew doctor;
+      - cmd: brew install dockutil
+      - cmd: brew install mas
+      - cmd: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended || true;
+
+  brew:
+    cmds:
+      - for: { var: brew }
+        cmd: brew install {{.ITEM}} || true
+      - cmd: brew update && brew upgrade && brew cleanup && brew doctor
+
+  appstore:
+    cmds:
+      - for: { var: appstore }
+        cmd: mas install {{.ITEM}}
+
+  doc:
+    vars:
+      items: 
+        sh: dockutil --list | awk '{print $1;}'
+    cmds:
+      - for: { var: items }
+        cmd: dockutil --remove '{{.ITEM}}' --allhomes
+      - for: { var: doc }
+        cmd: dockutil --add '{{.ITEM}}' --allhomes
+  
+  langs:
+    cmds:
+      - cmd: defaults write com.apple.HIToolbox AppleEnabledInputSources -array
+      - for: { var: langs }
+        cmd: >
+          defaults write com.apple.HIToolbox AppleEnabledInputSources -array-add 
+          "<dict>
+          <key>InputSourceKind</key><string>Keyboard Layout</string>
+          <key>KeyboardLayout ID</key><integer>{{.ITEM.id}}</integer>
+          <key>KeyboardLayout Name</key><string>{{.ITEM.name}}</string>
+          </dict>"
+
+  settings:
+    cmds:
+      - for: { var: settings }
+        cmd: "{{.ITEM}}"
